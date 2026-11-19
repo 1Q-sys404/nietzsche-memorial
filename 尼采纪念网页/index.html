@@ -1,0 +1,645 @@
+<!doctype html>
+<html lang="zh-CN">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="theme-color" content="#0b0a0d">
+  <meta name="description" content="弗里德里希·尼采纪念网页：生平、著作、核心思想、视觉档案与背景声场。">
+  <title>尼采 · 在深渊上舞蹈</title>
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 64 64'%3E%3Crect width='64' height='64' rx='12' fill='%230b0a0d'/%3E%3Ccircle cx='32' cy='32' r='21' fill='none' stroke='%23d8ff3e' stroke-width='3'/%3E%3Cpath d='M22 47V17h5l16 23V17h4v30h-5L26 24v23z' fill='%23f1e8d8'/%3E%3C/svg%3E">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <a class="skip-link" href="#mainContent">跳到正文</a>
+  <canvas id="particleField" aria-hidden="true"></canvas>
+  <div class="grain" aria-hidden="true"></div>
+  <div class="cursor-dot" aria-hidden="true"></div>
+  <div class="cursor-ring" aria-hidden="true"></div>
+  <div class="scroll-progress" aria-hidden="true"><span></span></div>
+
+  <audio id="bgMusic" src="assets/audio/turiner-nacht-ambient.wav" loop preload="metadata"></audio>
+
+  <div class="splash" id="splash" aria-label="网站开场">
+    <div class="splash__lines" aria-hidden="true"></div>
+    <div class="splash__content">
+      <p class="splash__kicker">FRIEDRICH NIETZSCHE · 1844—1900</p>
+      <div class="splash__seal" aria-hidden="true">
+        <span class="splash__orbit"></span>
+        <span class="splash__n">N</span>
+      </div>
+      <h1>在深渊上<br><em>舞蹈</em></h1>
+      <p class="splash__lead">一场关于破坏、生成与重估的精神旅程</p>
+      <div class="splash__actions">
+        <button class="magnetic-button magnetic-button--acid" id="enterSite">
+          <span>开启声音，进入</span>
+          <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6"/></svg>
+        </button>
+        <button class="text-button" id="enterSilent">静音浏览</button>
+      </div>
+      <p class="splash__note">建议佩戴耳机 · 背景声场为本站原创生成音乐</p>
+    </div>
+    <span class="splash__corner splash__corner--tl">DIONYSUS</span>
+    <span class="splash__corner splash__corner--br">ETERNAL RETURN</span>
+  </div>
+
+  <header class="site-header">
+    <a class="brand" href="#home" data-route="home" aria-label="返回首页">
+      <span class="brand__n">N.</span>
+      <span class="brand__text">尼采纪念空间<br><small>MEMORIAL ARCHIVE</small></span>
+    </a>
+
+    <nav class="site-nav" id="siteNav" aria-label="主要导航">
+      <a href="#home" data-route="home" class="is-active"><span>00</span>回声</a>
+      <a href="#life" data-route="life"><span>01</span>生平</a>
+      <a href="#works" data-route="works"><span>02</span>著作</a>
+      <a href="#ideas" data-route="ideas"><span>03</span>思想</a>
+      <a href="#legacy" data-route="legacy"><span>04</span>余震</a>
+    </nav>
+
+    <div class="header-tools">
+      <button class="sound-toggle" id="soundToggle" type="button" aria-label="播放背景音乐" title="播放背景音乐">
+        <span class="sound-bars" aria-hidden="true"><i></i><i></i><i></i><i></i></span>
+        <span class="sound-toggle__label">声场</span>
+      </button>
+      <button class="menu-toggle" id="menuToggle" type="button" aria-expanded="false" aria-controls="siteNav" aria-label="打开导航">
+        <span></span><span></span>
+      </button>
+    </div>
+  </header>
+
+  <main id="mainContent">
+    <section class="page page--home is-active" id="home" data-page="home" aria-labelledby="homeTitle">
+      <div class="hero">
+        <div class="hero__copy">
+          <p class="eyebrow reveal">哲学家 / 诗人 / 语文学家 <span>1844—1900</span></p>
+          <h1 class="hero__title reveal" id="homeTitle">
+            <span>弗里德里希</span>
+            <b>尼采</b>
+          </h1>
+          <div class="hero__statement reveal">
+            <span class="hero__line"></span>
+            <p>“你必须准备在自己身上燃烧：<br>如果你不先化为灰烬，<br>怎能成为光？”</p>
+            <small>—《快乐的科学》</small>
+          </div>
+          <div class="hero__actions reveal">
+            <a class="magnetic-button" href="#ideas" data-route="ideas">
+              <span>坠入思想</span>
+              <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h12M13 6l6 6-6 6"/></svg>
+            </a>
+            <a class="text-button" href="#life" data-route="life">从生平开始 <span>↓</span></a>
+          </div>
+        </div>
+
+        <div class="hero__art reveal" id="heroArt">
+          <div class="hero__ghost" aria-hidden="true">NIETZSCHE</div>
+          <div class="portrait-stage">
+            <span class="orbit orbit--outer" aria-hidden="true">
+              <i class="orbit__dot orbit__dot--one"></i>
+              <i class="orbit__dot orbit__dot--two"></i>
+            </span>
+            <span class="orbit orbit--inner" aria-hidden="true"></span>
+            <span class="orbit-caption orbit-caption--top">PORTRAIT · 1882</span>
+            <span class="orbit-caption orbit-caption--bottom">BASEL → SILS MARIA → TURIN</span>
+            <figure class="portrait">
+              <img src="assets/images/hero-1882.webp" width="1100" height="1468" alt="弗里德里希·尼采，1882 年肖像">
+              <figcaption>Wikimedia Commons · Public Domain</figcaption>
+            </figure>
+            <span class="crosshair crosshair--tl" aria-hidden="true"></span>
+            <span class="crosshair crosshair--br" aria-hidden="true"></span>
+          </div>
+          <span class="hero__side-note">“人是一根绳索，<br>系在动物与超人之间。”</span>
+          <span class="hero__coordinate">46°31′N<br>10°31′E</span>
+        </div>
+
+        <a class="scroll-cue" href="#manifest" aria-label="继续向下浏览">
+          <span>SCROLL TO DESCEND</span>
+          <i></i>
+        </a>
+      </div>
+
+      <div class="ticker" aria-hidden="true">
+        <div class="ticker__track">
+          <span>上帝死了</span><i>✦</i><span>永恒轮回</span><i>✦</i><span>超人</span><i>✦</i><span>权力意志</span><i>✦</i><span>重估一切价值</span><i>✦</i>
+          <span>上帝死了</span><i>✦</i><span>永恒轮回</span><i>✦</i><span>超人</span><i>✦</i><span>权力意志</span><i>✦</i><span>重估一切价值</span><i>✦</i>
+        </div>
+      </div>
+
+      <section class="manifest" id="manifest" aria-labelledby="manifestTitle">
+        <div class="section-index reveal"><span>00</span><i></i><span>THE THRESHOLD</span></div>
+        <div class="manifest__heading reveal">
+          <h2 id="manifestTitle">他不是一个答案。<br><em>他是一道裂缝。</em></h2>
+          <p>尼采的思想从不提供舒适的精神港湾。它更像一把锤子，敲击那些被视作理所当然的价值，让我们听见内部空洞的回声。</p>
+        </div>
+        <div class="manifest__grid">
+          <article class="manifest-card reveal">
+            <span class="manifest-card__number">01</span>
+            <div class="manifest-card__glyph" aria-hidden="true">↯</div>
+            <h3>拆毁</h3>
+            <p>追问道德、宗教与真理从何而来。不是简单地否定，而是让“理所当然”重新成为问题。</p>
+          </article>
+          <article class="manifest-card reveal">
+            <span class="manifest-card__number">02</span>
+            <div class="manifest-card__glyph" aria-hidden="true">∞</div>
+            <h3>生成</h3>
+            <p>把人理解为尚未完成的作品。生命不是等待正确答案，而是持续自我克服与创造。</p>
+          </article>
+          <article class="manifest-card reveal">
+            <span class="manifest-card__number">03</span>
+            <div class="manifest-card__glyph" aria-hidden="true">N</div>
+            <h3>重估</h3>
+            <p>从生命本身出发，检验一种价值究竟增强力量，还是源于怨恨与自我否定。</p>
+          </article>
+        </div>
+      </section>
+
+      <section class="home-echo" aria-label="尼采与今天">
+        <div class="home-echo__visual reveal">
+          <img src="assets/images/munch-nietzsche.webp" width="1400" height="1758" loading="lazy" alt="爱德华·蒙克 1906 年绘制的尼采肖像">
+          <span class="image-stamp">EDVARD MUNCH<br>1906</span>
+        </div>
+        <div class="home-echo__copy reveal">
+          <p class="eyebrow">WHY NIETZSCHE NOW?</p>
+          <h2>当确定性退潮，<br>人如何为自己<br><em>创造尺度？</em></h2>
+          <p>在信息过载、身份焦虑与价值碎片化的今天，尼采留下的不是一套主义，而是一种姿态：怀疑习以为常的判断，承受没有终审答案的自由，并为自己的选择负责。</p>
+          <a class="arrow-link" href="#legacy" data-route="legacy">阅读思想的余震 <span>↗</span></a>
+        </div>
+      </section>
+
+      <nav class="page-switcher" aria-label="下一页">
+        <span>下一站</span>
+        <a href="#life" data-route="life"><b>01</b> 一条通向深渊的路 <i>→</i></a>
+      </nav>
+    </section>
+
+    <section class="page page--life" id="life" data-page="life" aria-labelledby="lifeTitle" hidden>
+      <div class="page-hero page-hero--life">
+        <div class="page-number" aria-hidden="true">01</div>
+        <div class="page-hero__content reveal">
+          <p class="eyebrow">A LIFE IN FRAGMENTS <span>1844—1900</span></p>
+          <h1 id="lifeTitle">一条通向<br><em>深渊的路</em></h1>
+          <p class="page-hero__lead">从路肯的牧师之家，到巴塞尔的讲席；从阿尔卑斯山的孤独漫游，到都灵的崩解。尼采的一生，也是他的思想不断脱去旧皮的过程。</p>
+        </div>
+        <div class="page-hero__marginal reveal">
+          <span>BORN</span><b>15.10.1844</b><span>RÖCKEN</span>
+          <i></i>
+          <span>DIED</span><b>25.08.1900</b><span>WEIMAR</span>
+        </div>
+      </div>
+
+      <div class="life-layout">
+        <div class="timeline" aria-label="尼采生平时间线">
+          <article class="timeline-entry reveal">
+            <div class="timeline-entry__year"><span>1844</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">RÖCKEN · 路肯</p>
+              <h2>在牧师之家出生</h2>
+              <p>10 月 15 日，弗里德里希·威廉·尼采出生于普鲁士萨克森州的路肯。父亲卡尔·路德维希是一名路德宗牧师。五岁时父亲去世，家庭中的女性成员与宗教氛围深刻塑造了他的早年经验。</p>
+            </div>
+          </article>
+          <article class="timeline-entry reveal">
+            <div class="timeline-entry__year"><span>1869</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">BASEL · 巴塞尔</p>
+              <h2>二十四岁的古典语文学教授</h2>
+              <p>尚在莱比锡大学求学期间，尼采便获得巴塞尔大学古典语文学教席。瓦格纳与叔本华一度构成他精神世界中的两座高峰，但这段亲近关系后来也走向激烈决裂。</p>
+            </div>
+          </article>
+          <article class="timeline-entry reveal">
+            <div class="timeline-entry__year"><span>1872</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">BASEL</p>
+              <h2>《悲剧的诞生》震动学院</h2>
+              <p>这部作品以“日神”与“酒神”的张力解释希腊悲剧，把艺术视为对抗生命苦难的形而上活动。它赢得青年读者的热情，却也让古典语文学界质疑他偏离学术规范。</p>
+            </div>
+          </article>
+          <article class="timeline-entry reveal">
+            <div class="timeline-entry__year"><span>1879</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">SILS MARIA · 锡尔斯玛利亚</p>
+              <h2>辞去教职，开始漂泊写作</h2>
+              <p>健康恶化使他离开巴塞尔。此后十年，他在意大利、法国南部与瑞士之间寻找气候、孤独和写作的节奏。锡尔斯玛利亚的群山，使“永恒轮回”获得最初的风景。</p>
+              <blockquote>“六百英尺之外就是深渊，伟大的风景在此展开。”</blockquote>
+            </div>
+          </article>
+          <article class="timeline-entry timeline-entry--dark reveal">
+            <div class="timeline-entry__year"><span>1889</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">TURIN · 都灵</p>
+              <h2>在疯狂边缘熄灭</h2>
+              <p>1 月 3 日之后，尼采在都灵出现严重精神崩溃。关于他抱住受虐马匹的故事缺少可靠同时代证据，却成为后世不断重述的文化神话。此后，他不再能够持续写作。</p>
+            </div>
+          </article>
+          <article class="timeline-entry reveal">
+            <div class="timeline-entry__year"><span>1900</span><i></i></div>
+            <div class="timeline-entry__content">
+              <p class="timeline-entry__place">WEIMAR · 魏玛</p>
+              <h2>精神遗产进入公共记忆</h2>
+              <p>母亲于 1897 年去世后，妹妹伊丽莎白接管照料与档案。尼采于 1900 年 8 月 25 日去世。此后，尼采档案馆使魏玛成为思想记忆、编辑政治与后世争论交叠的地方。</p>
+            </div>
+          </article>
+        </div>
+
+        <aside class="life-aside reveal">
+          <figure class="archive-card archive-card--wide">
+            <img src="assets/images/archive-room.webp" width="1500" height="1136" loading="lazy" alt="约 1903 年，由亨利·凡·德·威尔德设计室内的尼采档案馆工作与咨询室">
+            <figcaption><span>01</span> 尼采档案馆工作与咨询室，约 1903 年</figcaption>
+          </figure>
+          <div class="archive-note">
+            <span class="archive-note__mark">↘</span>
+            <p>尼采的大部分名声在失去写作能力之后才到来。他晚年的文本、遗稿与编辑史，共同构成了一个并不透明的“尼采”。</p>
+          </div>
+          <figure class="archive-card archive-card--tall">
+            <img src="assets/images/nice-plaque.webp" width="1000" height="2000" loading="lazy" alt="法国内斯的一处建筑外墙，纪念尼采于 1883 年 12 月在此开始旅居">
+            <figcaption><span>02</span> 尼斯：尼采冬季漫游的城市</figcaption>
+          </figure>
+        </aside>
+      </div>
+
+      <section class="places" aria-labelledby="placesTitle">
+        <p class="section-index reveal"><span>MAP</span><i></i><span>INNER GEOGRAPHY</span></p>
+        <h2 class="reveal" id="placesTitle">他的思想，没有固定地址。</h2>
+        <div class="places__grid">
+          <article class="place reveal"><span>51.23°N 12.73°E</span><b>RÖCKEN</b><p>出生与最初的宗教记忆</p></article>
+          <article class="place reveal"><span>47.56°N 7.59°E</span><b>BASEL</b><p>讲席、友谊与第一次决裂</p></article>
+          <article class="place reveal"><span>46.43°N 9.82°E</span><b>SILS MARIA</b><p>群山、永恒轮回与查拉图斯特拉</p></article>
+          <article class="place reveal"><span>43.70°N 7.26°E</span><b>NICE</b><p>冬季写作与光的实验</p></article>
+          <article class="place reveal"><span>45.07°N 7.69°E</span><b>TURIN</b><p>最后的创造力与崩解</p></article>
+          <article class="place reveal"><span>50.98°N 11.32°E</span><b>WEIMAR</b><p>档案、编辑与思想的后世</p></article>
+        </div>
+      </section>
+
+      <nav class="page-switcher" aria-label="下一页">
+        <a href="#home" data-route="home">← 返回回声</a>
+        <a href="#works" data-route="works"><b>02</b> 纸页上的炸药 <i>→</i></a>
+      </nav>
+    </section>
+
+    <section class="page page--works" id="works" data-page="works" aria-labelledby="worksTitle" hidden>
+      <div class="page-hero page-hero--works">
+        <div class="page-number" aria-hidden="true">02</div>
+        <div class="page-hero__content reveal">
+          <p class="eyebrow">THE WRITTEN EXPLOSIVES <span>1872—1888</span></p>
+          <h1 id="worksTitle">纸页上的<br><em>炸药</em></h1>
+          <p class="page-hero__lead">从古典语文学到格言、诗与预言式散文，尼采不断更换写作的声音。以下书目按首次出版时间排列；点击书籍，阅读它的核心问题。</p>
+        </div>
+        <div class="works-orbit reveal" aria-hidden="true">
+          <span>PHILOSOPHY</span><span>POETRY</span><span>POLEMIC</span><b>12</b><i>BOOKS<br>IN ORBIT</i>
+        </div>
+      </div>
+
+      <div class="works-toolbar reveal">
+        <p><span id="workCount">12</span> 部作品 · 点击打开思想档案</p>
+        <div class="filters" role="group" aria-label="按时期筛选著作">
+          <button class="filter is-active" type="button" data-filter="all">全部</button>
+          <button class="filter" type="button" data-filter="early">早期</button>
+          <button class="filter" type="button" data-filter="middle">中期</button>
+          <button class="filter" type="button" data-filter="late">晚期</button>
+          <button class="filter" type="button" data-filter="posthumous">身后出版</button>
+        </div>
+      </div>
+
+      <div class="books-grid" id="booksGrid">
+        <button class="book-card book-card--1 reveal" type="button" data-book="tragedy" data-category="early">
+          <span class="book-card__year">1872</span><span class="book-card__spine"></span>
+          <span class="book-card__index">01</span>
+          <span class="book-card__title">悲剧的<br>诞生</span>
+          <span class="book-card__de">DIE GEBURT<br>DER TRAGÖDIE</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--2 reveal" type="button" data-book="untimely" data-category="early">
+          <span class="book-card__year">1873—76</span><span class="book-card__spine"></span>
+          <span class="book-card__index">02</span>
+          <span class="book-card__title">不合时宜<br>的沉思</span>
+          <span class="book-card__de">UNZEITGEMÄSSE<br>BETRACHTUNGEN</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--3 reveal" type="button" data-book="human" data-category="middle">
+          <span class="book-card__year">1878</span><span class="book-card__spine"></span>
+          <span class="book-card__index">03</span>
+          <span class="book-card__title">人性的，<br>太人性的</span>
+          <span class="book-card__de">MENSCHLICHES,<br>ALLZUMENSCHLICHES</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--4 reveal" type="button" data-book="dawn" data-category="middle">
+          <span class="book-card__year">1881</span><span class="book-card__spine"></span>
+          <span class="book-card__index">04</span>
+          <span class="book-card__title">曙光</span>
+          <span class="book-card__de">MORGENRÖTE</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--5 reveal" type="button" data-book="gay" data-category="middle">
+          <span class="book-card__year">1882</span><span class="book-card__spine"></span>
+          <span class="book-card__index">05</span>
+          <span class="book-card__title">快乐的<br>科学</span>
+          <span class="book-card__de">DIE FRÖHLICHE<br>WISSENSCHAFT</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--6 reveal" type="button" data-book="zarathustra" data-category="middle">
+          <span class="book-card__year">1883—85</span><span class="book-card__spine"></span>
+          <span class="book-card__index">06</span>
+          <span class="book-card__title">查拉图<br>斯特拉</span>
+          <span class="book-card__de">ALSO SPRACH<br>ZARATHUSTRA</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--7 reveal" type="button" data-book="beyond" data-category="late">
+          <span class="book-card__year">1886</span><span class="book-card__spine"></span>
+          <span class="book-card__index">07</span>
+          <span class="book-card__title">善恶的<br>彼岸</span>
+          <span class="book-card__de">JENSEITS VON<br>GUT UND BÖSE</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--8 reveal" type="button" data-book="genealogy" data-category="late">
+          <span class="book-card__year">1887</span><span class="book-card__spine"></span>
+          <span class="book-card__index">08</span>
+          <span class="book-card__title">道德谱系</span>
+          <span class="book-card__de">ZUR GENEALOGIE<br>DER MORAL</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--9 reveal" type="button" data-book="wagner" data-category="late">
+          <span class="book-card__year">1888</span><span class="book-card__spine"></span>
+          <span class="book-card__index">09</span>
+          <span class="book-card__title">瓦格纳<br>事件</span>
+          <span class="book-card__de">DER FALL<br>WAGNER</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--10 reveal" type="button" data-book="twilight" data-category="late">
+          <span class="book-card__year">1889</span><span class="book-card__spine"></span>
+          <span class="book-card__index">10</span>
+          <span class="book-card__title">偶像的<br>黄昏</span>
+          <span class="book-card__de">GÖTZEN-DÄMMERUNG</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--11 reveal" type="button" data-book="antichrist" data-category="late posthumous">
+          <span class="book-card__year">1895</span><span class="book-card__spine"></span>
+          <span class="book-card__index">11</span>
+          <span class="book-card__title">敌基督</span>
+          <span class="book-card__de">DER<br>ANTICHRIST</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+        <button class="book-card book-card--12 reveal" type="button" data-book="ecce" data-category="late posthumous">
+          <span class="book-card__year">1908</span><span class="book-card__spine"></span>
+          <span class="book-card__index">12</span>
+          <span class="book-card__title">瞧，<br>这个人</span>
+          <span class="book-card__de">ECCE HOMO</span>
+          <span class="book-card__open">打开 ↗</span>
+        </button>
+      </div>
+
+      <section class="writing-method" aria-labelledby="methodTitle">
+        <div class="writing-method__quote reveal">
+          <span>APHORISM</span>
+          <b>“</b>
+          <p>我只有一种风格，<br>就是没有风格。</p>
+        </div>
+        <div class="writing-method__copy reveal">
+          <p class="section-index"><span>METHOD</span><i></i><span>THINKING IN FRAGMENTS</span></p>
+          <h2 id="methodTitle">格言不是缩写，<br>而是思想的<em>闪光。</em></h2>
+          <p>尼采常用格言、箴言、诗与角色独白制造断裂：读者必须自己越过句子之间的空白。这种写作拒绝了体系化的舒适，也让他的文本极易被摘句、误读和武器化。</p>
+          <p>因此，阅读尼采时不妨保留上下文：谁在说话？他正在反对什么？这个隐喻是否可能反过来吞噬使用者？</p>
+        </div>
+      </section>
+
+      <nav class="page-switcher" aria-label="下一页">
+        <a href="#life" data-route="life">← 返回生平</a>
+        <a href="#ideas" data-route="ideas"><b>03</b> 思想的星图 <i>→</i></a>
+      </nav>
+    </section>
+
+    <section class="page page--ideas" id="ideas" data-page="ideas" aria-labelledby="ideasTitle" hidden>
+      <div class="page-hero page-hero--ideas">
+        <div class="page-number" aria-hidden="true">03</div>
+        <div class="page-hero__content reveal">
+          <p class="eyebrow">A CONSTELLATION OF QUESTIONS <span>NOT A SYSTEM</span></p>
+          <h1 id="ideasTitle">思想的<br><em>星图</em></h1>
+          <p class="page-hero__lead">尼采的“主义”往往并不像标签那样整齐。点击星图上的节点，进入六个彼此牵引、偶尔冲突的思想坐标。</p>
+        </div>
+      </div>
+
+      <section class="thought-lab" aria-labelledby="labTitle">
+        <div class="thought-lab__map reveal">
+          <p class="section-index"><span>INTERACTIVE</span><i></i><span>CLICK A NODE</span></p>
+          <div class="concept-orbit">
+            <div class="concept-orbit__rings" aria-hidden="true">
+              <i></i><i></i><i></i>
+            </div>
+            <div class="concept-orbit__center">
+              <span>THINK</span>
+              <b>N</b>
+              <small>AGAIN</small>
+            </div>
+            <button class="idea-node is-active" type="button" data-idea="recurrence" style="--angle:-90deg">
+              <b>∞</b><span>永恒轮回</span>
+            </button>
+            <button class="idea-node" type="button" data-idea="power" style="--angle:-30deg">
+              <b>⚡</b><span>权力意志</span>
+            </button>
+            <button class="idea-node" type="button" data-idea="overman" style="--angle:30deg">
+              <b>↑</b><span>超人</span>
+            </button>
+            <button class="idea-node" type="button" data-idea="revaluation" style="--angle:90deg">
+              <b>⚒</b><span>价值重估</span>
+            </button>
+            <button class="idea-node" type="button" data-idea="perspectivism" style="--angle:150deg">
+              <b>◉</b><span>视角主义</span>
+            </button>
+            <button class="idea-node" type="button" data-idea="morality" style="--angle:210deg">
+              <b>⚖</b><span>道德谱系</span>
+            </button>
+          </div>
+          <p class="thought-lab__hint">这不是互不相关的关键词，而是一组持续张开的问号。</p>
+        </div>
+
+        <article class="idea-panel reveal" id="ideaPanel" aria-live="polite">
+          <div class="idea-panel__top">
+            <span id="ideaIndex">01 / 06</span>
+            <span id="ideaOriginal">EWIGE WIEDERKUNFT</span>
+          </div>
+          <div class="idea-panel__symbol" id="ideaSymbol" aria-hidden="true">∞</div>
+          <h2 id="ideaTitle">永恒轮回</h2>
+          <p class="idea-panel__lead" id="ideaLead"></p>
+          <div class="idea-panel__detail">
+            <p id="ideaBody"></p>
+            <blockquote id="ideaQuote"></blockquote>
+          </div>
+          <div class="idea-panel__caution">
+            <span>阅读提示</span>
+            <p id="ideaCaution"></p>
+          </div>
+        </article>
+      </section>
+
+      <section class="aphorism-machine" aria-labelledby="aphorismTitle">
+        <div class="aphorism-machine__top reveal">
+          <p class="section-index"><span>ORACLE</span><i></i><span>ONE THOUGHT AT A TIME</span></p>
+          <span class="aphorism-machine__count" id="aphorismCount">01 — 08</span>
+        </div>
+        <div class="aphorism-machine__body reveal">
+          <div class="aphorism-machine__mark" aria-hidden="true">“</div>
+          <blockquote id="aphorismText">人是一根绳索，系在动物与超人之间——一根悬在深渊上的绳索。</blockquote>
+          <p id="aphorismSource">《查拉图斯特拉如是说》</p>
+          <button class="shuffle-button" id="shuffleAphorism" type="button">
+            <span>再抽一张思想签</span>
+            <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 7h3c5 0 5 10 10 10h3M17 14l3 3-3 3M4 17h3c2.2 0 3.4-1.9 4.5-4M20 7l-3-3-3 3"/></svg>
+          </button>
+        </div>
+      </section>
+
+      <section class="reading-keys" aria-labelledby="keysTitle">
+        <div class="reading-keys__title reveal">
+          <p class="eyebrow">FOUR READING KEYS</p>
+          <h2 id="keysTitle">不要急着<br><em>站队。</em></h2>
+        </div>
+        <div class="reading-keys__grid">
+          <article class="reading-key reveal"><span>01</span><h3>读上下文</h3><p>区分叙述者、被讽刺的对象与尼采本人的声音。</p></article>
+          <article class="reading-key reveal"><span>02</span><h3>读身体</h3><p>在他的文本里，健康、疾病、饮食与气候从来不是无关细节。</p></article>
+          <article class="reading-key reveal"><span>03</span><h3>读冲突</h3><p>晚期思想常彼此拉扯。保留矛盾，比制造统一体系更忠实。</p></article>
+          <article class="reading-key reveal"><span>04</span><h3>读编辑史</h3><p>遗稿与身后读物经过他人整理，不能都自动等同于定稿。</p></article>
+        </div>
+      </section>
+
+      <nav class="page-switcher" aria-label="下一页">
+        <a href="#works" data-route="works">← 返回著作</a>
+        <a href="#legacy" data-route="legacy"><b>04</b> 思想的余震 <i>→</i></a>
+      </nav>
+    </section>
+
+    <section class="page page--legacy" id="legacy" data-page="legacy" aria-labelledby="legacyTitle" hidden>
+      <div class="page-hero page-hero--legacy">
+        <div class="page-number" aria-hidden="true">04</div>
+        <div class="page-hero__content reveal">
+          <p class="eyebrow">THE AFTERSHOCK <span>1900 — NOW</span></p>
+          <h1 id="legacyTitle">思想的<br><em>余震</em></h1>
+          <p class="page-hero__lead">尼采死后，他的语句进入哲学、文学、心理学、音乐与政治。它们曾被误读、篡改、崇拜，也曾帮助人们抵抗顺从。思想的后果从不等于作者的单方面意图。</p>
+        </div>
+        <div class="legacy-wave" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      </div>
+
+      <section class="legacy-ledger">
+        <article class="legacy-item legacy-item--feature reveal">
+          <div class="legacy-item__year">1900s</div>
+          <p class="legacy-item__label">ARCHIVE</p>
+          <h2>从私人手稿到国家记忆</h2>
+          <p>尼采档案馆在魏玛整理、展示并编辑其作品。妹妹伊丽莎白·福斯特-尼采与纳粹政权的联系，使档案史同时成为思想传播史与政治操弄史。</p>
+          <img src="assets/images/antichrist-manuscript.webp" width="1500" height="1021" loading="lazy" alt="尼采《敌基督》两版手稿题页复制件">
+        </article>
+        <article class="legacy-item reveal">
+          <div class="legacy-item__year">20TH C.</div>
+          <p class="legacy-item__label">RECEPTION</p>
+          <h2>一场全球误读与重读</h2>
+          <p>存在主义、精神分析、结构主义、后结构主义与艺术现代主义都曾与尼采交锋。他既影响了反叛的个人主义，也遭民族主义者与纳粹宣传选择性挪用。</p>
+        </article>
+        <article class="legacy-item legacy-item--acid reveal">
+          <div class="legacy-item__year">1888</div>
+          <p class="legacy-item__label">WILL TO POWER</p>
+          <h2>一个需要打引号的“书名”</h2>
+          <p>《权力意志》并非尼采生前完成并出版的同名著作。它主要由身后遗稿编排而成，早期版本还带有编辑者的强烈影响。把它当作体系总纲，会遮蔽晚期笔记的试验性质。</p>
+        </article>
+        <article class="legacy-item reveal">
+          <div class="legacy-item__year">NOW</div>
+          <p class="legacy-item__label">RESONANCE</p>
+          <h2>不是“做自己”，而是成为更复杂的自己</h2>
+          <p>尼采的自我克服不是无限任性。它要求审视欲望、承担后果、承认身体与有限性，并不断拆解自己最不愿怀疑的信念。</p>
+        </article>
+      </section>
+
+      <section class="afterlife-visual" aria-label="后世图像档案">
+        <figure class="afterlife-visual__image reveal">
+          <img src="assets/images/munch-nietzsche.webp" width="1400" height="1758" loading="lazy" alt="蒙克 1906 年所绘尼采立于风景前的肖像">
+          <figcaption>爱德华·蒙克，《弗里德里希·尼采》，1906。Public Domain / Thielska Galleriet。</figcaption>
+        </figure>
+        <div class="afterlife-visual__copy reveal">
+          <p class="eyebrow">THE IMAGE AFTER THE MAN</p>
+          <h2>后世不断<br><em>重新发明</em><br>尼采。</h2>
+          <p>先知、疯子、纳粹先声、存在主义先驱、后现代鼻祖……每一种面目都放大了一个局部。纪念不意味着封圣，而是继续保留阅读的困难。</p>
+          <div class="afterlife-visual__signature">F. N.<span>1844—1900</span></div>
+        </div>
+      </section>
+
+      <section class="takeaways" aria-labelledby="takeawaysTitle">
+        <div class="takeaways__intro reveal">
+          <p class="section-index"><span>AFTER ALL</span><i></i><span>WHAT REMAINS?</span></p>
+          <h2 id="takeawaysTitle">带走三个<br><em>问题。</em></h2>
+        </div>
+        <div class="takeaways__list">
+          <article class="takeaway reveal"><span>01</span><h3>你相信的，究竟是谁的价值？</h3><p>价值有其历史、身体与心理来源。追问来源，不等于取消一切判断。</p></article>
+          <article class="takeaway reveal"><span>02</span><h3>如果一切重来，你会如何生活？</h3><p>永恒轮回不是宇宙论承诺，也可以被当作检验生活姿态的思想实验。</p></article>
+          <article class="takeaway reveal"><span>03</span><h3>你愿意成为自己的实验吗？</h3><p>不是为了胜过所有人，而是让自身的复杂性得到更充分的表达。</p></article>
+        </div>
+      </section>
+
+      <section class="sources" aria-labelledby="sourcesTitle">
+        <div class="sources__heading reveal">
+          <p class="eyebrow">SOURCES & IMAGE CREDITS</p>
+          <h2 id="sourcesTitle">资料来源与图片授权</h2>
+          <p>本站以中文进行编辑性整理，不替代原著与专业研究。人物生平和思想概述参考 Stanford Encyclopedia of Philosophy、Project Gutenberg 及尼采档案馆等公开资料。</p>
+        </div>
+        <div class="sources__grid">
+          <div class="sources__list reveal">
+            <a href="https://plato.stanford.edu/entries/nietzsche/" target="_blank" rel="noopener noreferrer">Stanford Encyclopedia of Philosophy · Nietzsche <span>↗</span></a>
+            <a href="https://www.gutenberg.org/ebooks/author/779" target="_blank" rel="noopener noreferrer">Project Gutenberg · Friedrich Nietzsche <span>↗</span></a>
+            <a href="https://www.klassik-stiftung.de/nietzsche-archiv/" target="_blank" rel="noopener noreferrer">Klassik Stiftung Weimar · Nietzsche-Archiv <span>↗</span></a>
+            <a href="https://commons.wikimedia.org/wiki/Category:Friedrich_Nietzsche" target="_blank" rel="noopener noreferrer">Wikimedia Commons · 图像来源与授权 <span>↗</span></a>
+          </div>
+          <div class="credits reveal">
+            <p><b>图像</b> 1882 年尼采肖像、档案馆室内、手稿题页、尼斯纪念牌及蒙克画作均来自 Wikimedia Commons，分别为 Public Domain 或 CC0；本站使用 WebP 优化副本。</p>
+            <p><b>音乐</b> 《都灵夜航》为本站生成的原创 50 秒循环氛围声景，不包含第三方录音。</p>
+            <p><b>声明</b> 引语翻译用于展览式呈现，部分采用通行中译并经过编辑；学术引用请核对原著与权威译本。</p>
+          </div>
+        </div>
+      </section>
+
+      <nav class="page-switcher" aria-label="返回">
+        <a href="#ideas" data-route="ideas">← 返回思想星图</a>
+        <a href="#home" data-route="home"><b>⟲</b> 重新坠入 <i>↗</i></a>
+      </nav>
+    </section>
+  </main>
+
+  <footer class="site-footer">
+    <a class="brand brand--footer" href="#home" data-route="home">
+      <span class="brand__n">N.</span>
+      <span class="brand__text">在深渊上舞蹈<br><small>A DIGITAL MEMORIAL · 2026</small></span>
+    </a>
+    <p>“没有事实，只有解释。”<small>常被归于尼采，出自身后笔记，语境存在争议。</small></p>
+    <button class="footer-credit" id="openCredits" type="button">素材与授权 <span>↑</span></button>
+  </footer>
+
+  <div class="music-dock" id="musicDock" aria-label="背景音乐控制">
+    <button class="music-dock__button" id="musicDockButton" type="button" aria-label="播放背景音乐">
+      <span class="music-dock__play" aria-hidden="true"></span>
+      <span class="music-dock__bars" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i></span>
+    </button>
+    <div class="music-dock__text">
+      <span id="musicStatus">声场已静默</span>
+      <b>TURINER NACHT</b>
+    </div>
+    <span class="music-dock__time">50″ LOOP</span>
+  </div>
+
+  <dialog class="book-modal" id="bookModal" aria-labelledby="modalTitle">
+    <button class="modal-close" id="modalClose" type="button" aria-label="关闭著作档案">✕</button>
+    <div class="book-modal__aside">
+      <span id="modalYear">1872</span>
+      <span id="modalCategory">EARLY PERIOD</span>
+      <div class="book-modal__glyph" id="modalGlyph" aria-hidden="true">N</div>
+    </div>
+    <div class="book-modal__content">
+      <p class="eyebrow">SELECTED WORK</p>
+      <h2 id="modalTitle">悲剧的诞生</h2>
+      <p class="book-modal__original" id="modalOriginal">DIE GEBURT DER TRAGÖDIE</p>
+      <p class="book-modal__summary" id="modalSummary"></p>
+      <blockquote id="modalQuote"></blockquote>
+      <div class="book-modal__questions">
+        <span>继续追问</span>
+        <p id="modalQuestion"></p>
+      </div>
+    </div>
+  </dialog>
+
+  <noscript>
+    <div class="noscript-note">本站需要 JavaScript 才能切换分页与播放音乐。请在浏览器设置中启用 JavaScript。</div>
+  </noscript>
+
+  <script src="app.js"></script>
+</body>
+</html>
